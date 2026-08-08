@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Adhura Ishq — Shayari by Tiwari Jii">
+<title>Adhura Ishq — By Tiwari Jii ❤️‍🩹</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#0d0910;color:#f8edf5;min-height:100vh}
+header{padding:42px 18px;text-align:center;background:radial-gradient(circle at top,#4a183b,#190e19 55%,#0d0910)}
+header h1{font-size:clamp(38px,10vw,64px);font-family:Georgia,serif}
+header .tag{margin-top:8px;color:#e4b8d3;font-size:17px}
+.author{display:inline-block;margin-top:16px;padding:8px 16px;border:1px solid #a65a8a;border-radius:30px;color:#fff;background:#35152d}
+nav{display:flex;gap:8px;overflow:auto;padding:12px;background:#140d15;position:sticky;top:0;z-index:5;border-bottom:1px solid #342333}
+nav button{white-space:nowrap;border:1px solid #5d3a51;background:#211521;color:#fff;padding:10px 15px;border-radius:22px;cursor:pointer}
+nav button.active,nav button:hover{background:#8d3f70}
+main{max-width:1000px;margin:auto;padding:20px}
+.search{width:100%;padding:15px 17px;border-radius:14px;border:1px solid #5d3a51;background:#181019;color:white;font-size:16px;margin-bottom:20px;outline:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.card{background:linear-gradient(145deg,#211520,#151016);border:1px solid #3d2738;border-radius:20px;padding:21px;box-shadow:0 10px 28px #0007}
+.cat{font-size:11px;color:#dc8fbe;text-transform:uppercase;letter-spacing:1.5px}
+.card p{font-family:Georgia,serif;font-size:18px;line-height:1.9;margin:13px 0 18px}
+.actions{display:flex;gap:8px}
+.actions button{border:0;border-radius:10px;padding:9px 13px;background:#8d3f70;color:#fff;cursor:pointer}
+.actions .share{background:#4b3150}
+.empty{text-align:center;padding:40px;color:#bfa8b8}
+.quote{text-align:center;margin:8px auto 25px;color:#c8a7bb;font-family:Georgia,serif}
+footer{text-align:center;padding:35px 15px;color:#a98c9f;border-top:1px solid #291d28;margin-top:20px}
+footer strong{color:#e1a9ca}
+</style>
+</head>
+<body>
+<header>
+  <h1>Adhura Ishq ❤️‍🩹</h1>
+  <p class="tag">Jo keh na sake… woh lafz yahan milenge.</p>
+  <div class="author">✍️ By Tiwari Jii</div>
+</header>
+
+<nav>
+  <button class="active" data-cat="all">Sab</button>
+  <button data-cat="love">Love ❤️</button>
+  <button data-cat="sad">Sad 💔</button>
+  <button data-cat="adhura">Adhura Ishq 🖤</button>
+  <button data-cat="2line">2-Line ✨</button>
+</nav>
+
+<main>
+  <p class="quote">“Har adhuri kahani mein kuch khoobsurat lafz zaroor hote hain…”</p>
+  <input id="search" class="search" placeholder="🔍 Shayari search karo...">
+  <section id="grid" class="grid"></section>
+</main>
+
+<footer>
+  <div>Made with ❤️ for every unfinished love story.</div>
+  <div style="margin-top:8px">© 2026 <strong>Adhura Ishq — By Tiwari Jii</strong></div>
+</footer>
+
+<script>
+const shayari=[
+{cat:"love",text:"Tera naam aaye toh chehre par muskaan aa jaati hai,\\nMohabbat kya hai, bas itna samajh aata hai."},
+{cat:"sad",text:"Kuch log dil mein reh jaate hain,\\nMagar zindagi mein nahi."},
+{cat:"adhura",text:"Ishq tha, isliye khamosh rahe,\\nWarna shikayat toh bahut thi tumse."},
+{cat:"2line",text:"Adhura sa reh gaya woh afsana,\\nJisme tum the aur mera dil deewana."},
+{cat:"love",text:"Tum paas ho ya door, farq itna sa hai,\\nDil ko har pal tumhara hi intezaar hai."},
+{cat:"sad",text:"Muskurana seekh liya humne,\\nPar khush rehna ab bhi nahi aata."},
+{cat:"adhura",text:"Kahani khatam nahi hui, bas lafz khatam ho gaye,\\nHum dono theek the… bas raaste alag ho gaye."},
+{cat:"2line",text:"Mohabbat mili bhi toh adhuri mili,\\nJaise baarish mili aur zameen pyasi rahi."},
+{cat:"love",text:"Dil ko sukoon milta hai tumhara naam lekar,\\nJaise koi dua poori ho jaati ho."},
+{cat:"sad",text:"Yaadein kabhi permission lekar nahi aati,\\nBas achanak aankhon ko nam kar jaati hain."},
+{cat:"adhura",text:"Hum mile zaroor the ek kahani ke liye,\\nMagar bichhad gaye ek yaad banne ke liye."},
+{cat:"2line",text:"Woh mera hokar bhi mera na hua,\\nAur mera dil kisi aur ka na hua."}
+];
+
+let category="all";
+const grid=document.getElementById("grid"),search=document.getElementById("search");
+function render(){
+ const q=search.value.toLowerCase().trim();
+ const items=shayari.filter(s=>(category==="all"||s.cat===category)&&s.text.toLowerCase().includes(q));
+ grid.innerHTML=items.length?items.map((s,i)=>`
+ <article class="card">
+   <span class="cat">${s.cat}</span>
+   <p>${s.text.replaceAll("\\n","<br>")}</p>
+   <div class="actions">
+    <button onclick='copyText(${JSON.stringify(s.text)})'>📋 Copy</button>
+    <button class="share" onclick='shareText(${JSON.stringify(s.text)})'>📤 Share</button>
+   </div>
+ </article>`).join(""):'<div class="empty">Koi Shayari nahi mili 🖤</div>';
+}
+function copyText(text){
+ navigator.clipboard?.writeText(text).then(()=>alert("Shayari copy ho gayi ❤️"));
+}
+async function shareText(text){
+ if(navigator.share){await navigator.share({title:"Adhura Ishq — By Tiwari Jii",text:text+"\\n\\n— Tiwari Jii"});}
+ else copyText(text+"\\n\\n— Tiwari Jii");
+}
+document.querySelectorAll("nav button").forEach(b=>{
+ b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");category=b.dataset.cat;render();}
+});
+search.oninput=render;
+render();
+</script>
+</body>
+</html>
